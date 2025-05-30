@@ -84,7 +84,7 @@ def load_and_preprocess_image_for_display(image_pil):
 # --- Streamlit UI Layout and Interaction ---
 # Set basic page configuration for a wide layout and title
 st.set_page_config(layout="wide", page_title="Plant Disease Classifier")
-st.title("🌿 Plant Disease Classifier & Solution Advisor")
+st.title("🌾 Crop/🌿 Plant Disease Classifier & Solution Advisor")
 st.markdown("Upload an image of a plant leaf to classify its disease and get treatment advice.")
 
 # Create two columns for layout: one for image upload/classification, one for solution
