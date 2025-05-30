@@ -169,15 +169,6 @@ st.sidebar.markdown(
 - **Gemini Model:** `gemini-1.5-flash-latest`
 """
 )
-st.sidebar.markdown(
-    """
-    **Note:** The Vertex AI Endpoint for live classification has been bypassed in this version for demonstration purposes 
-    due to cost considerations. The predicted disease is **hardcoded to "Wheat Rust"** to showcase the Gemini API's 
-    ability to provide remedies. To enable live plant disease classification, you would need to deploy your own 
-    Vertex AI AutoML model and integrate it.
-    """
-)
-
 st.sidebar.header("Future Plans")
 st.sidebar.markdown(
     """
