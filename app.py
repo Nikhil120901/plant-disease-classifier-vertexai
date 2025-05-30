@@ -5,21 +5,25 @@ import os
 import base64
 import io # For handling image bytes
 
+# --- Streamlit UI Layout and Interaction (MUST BE FIRST) ---
+# Set basic page configuration for a wide layout and title
+st.set_page_config(layout="wide", page_title="Plant Disease Classifier")
+
 # --- Gemini API Integration ---
 import google.generativeai as genai
 
 # Configure Gemini API Key securely
-# For Streamlit Community Cloud: Use st.secrets
-# For local testing: Use environment variable or hardcode temporarily for hackathon (NOT PRODUCTION!)
+gemini_api_key_found = False
 try:
     # Attempt to get API key from environment variable (for local testing)
     # or from Streamlit secrets (for Streamlit Community Cloud deployment)
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=GEMINI_API_KEY)
+    gemini_api_key_found = True
 except Exception:
-    # Display a warning if the API key isn't found, but allow the app to run
-    # (solution generation will fail without the key)
-    st.warning("Gemini API Key not found. Please set GEMINI_API_KEY environment variable (local) or in Streamlit secrets (cloud). Solution generation may fail.")
+    # Do not show st.warning here, as st.set_page_config must be first.
+    # We will show the warning conditionally later.
+    pass
 
 
 def get_solution_from_gemini(disease_name, plant_type="plant"):
@@ -33,14 +37,13 @@ def get_solution_from_gemini(disease_name, plant_type="plant"):
     Returns:
         str: A Markdown-formatted string with the solution, or an error message.
     """
-    if not GEMINI_API_KEY:
+    if not gemini_api_key_found: # Use the flag to check if key was found
         return "Error: Gemini API key not configured. Cannot fetch solution."
     try:
         # Initialize the GenerativeModel with the specified model name
         model = genai.GenerativeModel(model_name='gemini-1.5-flash-latest') # Using 'flash' for faster responses
 
         # Construct the prompt for the Gemini model
-        # Re-typing triple quotes to resolve potential 'unterminated string literal' error
         prompt = f"""
 Provide a concise and actionable guide for treating and preventing the plant disease: '{disease_name}' in {plant_type}s.
 Include the following sections if possible:
@@ -81,9 +84,11 @@ def load_and_preprocess_image_for_display(image_pil):
     return image_pil.convert('RGB') # Ensure image is in RGB format for consistent display
 
 
-# --- Streamlit UI Layout and Interaction ---
-# Set basic page configuration for a wide layout and title
-st.set_page_config(layout="wide", page_title="Plant Disease Classifier")
+# Display warning about Gemini API key AFTER st.set_page_config
+if not gemini_api_key_found:
+    st.warning("Gemini API Key not found. Please set GEMINI_API_KEY environment variable (local) or in Streamlit secrets (cloud). Solution generation may fail.")
+
+
 st.title("🌾 Crop/🌿 Plant Disease Classifier & Solution Advisor")
 st.markdown("Upload an image of a plant leaf to classify its disease and get treatment advice.")
 
@@ -100,7 +105,7 @@ with col1:
         st.image(image, caption='Uploaded Image.', use_column_width=True)
 
         # Button to trigger the classification and solution generation
-        if st.button('🔍 Classify Disease & Get Solution', type="primary"):
+        if st.button('🔍 Classify Disease & Get Solution', type="primary'):
             with st.spinner('Analyzing image and fetching advice...'):
                 # --- Bypassing Vertex AI Prediction ---
                 # Manually set the predicted disease to "Wheat Rust"
