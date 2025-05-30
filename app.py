@@ -157,6 +157,13 @@ st.sidebar.markdown(
     to protect their crops and livelihoods.
     """
 )
+st.sidebar.markdown(
+    """
+    **Note:** The Vertex AI Endpoint used for this demo has been undeployed for cost-related reasons. 
+    To enable live plant disease classification, you would need to deploy your own Vertex AI AutoML model 
+    and update the `ENDPOINT_ID` in the `app.py` code.
+    """
+)
 
 st.sidebar.header("Configuration (for developers)")
 st.sidebar.markdown(
