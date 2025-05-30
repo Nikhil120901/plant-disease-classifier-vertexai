@@ -163,9 +163,9 @@ st.sidebar.markdown(
 st.sidebar.header("Configuration (for developers)")
 st.sidebar.markdown(
     """
-- **GCP Project ID:** `genaihackathon1` (Not directly used in this bypassed version)
-- **Vertex AI Region:** `us-central1` (Not directly used in this bypassed version)
-- **Vertex AI Endpoint ID:** `YOUR_VERTEX_AI_ENDPOINT_ID` (Not used; classification is hardcoded)
+- **GCP Project ID:** `genaihackathon1`
+- **Vertex AI Region:** `us-central1` 
+- **Vertex AI Endpoint ID:** `YOUR_VERTEX_AI_ENDPOINT_ID` (You would need to deploy your own)
 - **Gemini Model:** `gemini-1.5-flash-latest`
 """
 )
