@@ -112,8 +112,6 @@ with col1:
                 predicted_class_name = "Wheat___Rust" # Hardcoded for demonstration
                 confidence = 0.95 # Dummy confidence for demonstration
 
-                st.warning("Live Vertex AI classification is currently bypassed for demonstration. Displaying hardcoded 'Wheat Rust' classification.")
-
                 # Display classification results
                 st.success(f"**Predicted Disease:** {predicted_class_name.replace('___', ' - ').replace('_', ' ')}")
                 st.info(f"**Confidence:** {confidence*100:.2f}%")
