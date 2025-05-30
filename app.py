@@ -105,7 +105,7 @@ with col1:
         st.image(image, caption='Uploaded Image.', use_column_width=True)
 
         # Button to trigger the classification and solution generation
-        if st.button('🔍 Classify Disease & Get Solution', type="primary'):
+        if st.button('🔍 Classify Disease & Get Solution', type="primary"):
             with st.spinner('Analyzing image and fetching advice...'):
                 # --- Bypassing Vertex AI Prediction ---
                 # Manually set the predicted disease to "Wheat Rust"
